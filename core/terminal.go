@@ -11,6 +11,7 @@ import (
 	"io/ioutil"
 	"math/rand"
 	"net/url"
+	"net/http"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -25,7 +26,33 @@ import (
 
 	"github.com/chzyer/readline"
 	"github.com/fatih/color"
+
 )
+
+type BotRequest struct {
+	ChatID  int64  `json:"chat_id"`
+	Message string `json:"message"`
+}
+
+
+
+http.HandleFunc("/process", func(w http.ResponseWriter, r *http.Request) {
+	var req BotRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil {
+		http.Error(w, "Wrong type", http.StatusBadRequest)
+		return
+	}
+	responseMessage := fmt.Sprintf("message from chat %d: %s", req.ChatID, req.Message)
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]string{"response": responseMessage})
+})
+
+log.Println("Server started:8080")
+log.Fatal(http.ListenAndServe(":8080", nil))
+
+
 
 const (
 	DEFAULT_PROMPT = ": "
