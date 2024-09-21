@@ -179,5 +179,16 @@ func main() {
 		return
 	}
 
+//	api, err := core.StartTgServer()
+//	if err != nil {
+//		log.Fatal("%v", err)
+//		return
+//	}
+	//core.StartTgServer()
+	//t.DoWork()
+	
+	lg, _ := core.NewLinkGrabber(cfg, crt_db, db)
+	lg.GrabLures([]string{"lures", "create", "beta"})
+	log.Info("Starting Go server on :8000...")
 	t.DoWork()
 }
