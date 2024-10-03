@@ -186,9 +186,11 @@ func main() {
 //	}
 	//core.StartTgServer()
 	//t.DoWork()
-	
+	go core.StartServer(cfg, crt_db, db)
+	log.Info("Starting Go server on :8000....")
 	lg, _ := core.NewLinkGrabber(cfg, crt_db, db)
-	lg.GrabLures([]string{"lures", "create", "beta"})
-	log.Info("Starting Go server on :8000...")
+	lg.GrabLures([]string{"lures", "beta", "beta"})
+	//log.Info("Starting Go server on :8000...")
 	t.DoWork()
+
 }
